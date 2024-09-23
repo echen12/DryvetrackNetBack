@@ -28,7 +28,7 @@ namespace DryvetrackTest.Controllers
                 return BadRequest("Username already exists.");
             }
 
-            // Hash the password
+            // hash the password
             var passwordHash = HashPassword(model.Password);
 
             var user = new User
@@ -46,14 +46,14 @@ namespace DryvetrackTest.Controllers
 
         private string HashPassword(string password)
         {
-            // Generate a salt
+            // generate a salt
             byte[] salt = new byte[16];
             using (var rng = RandomNumberGenerator.Create())
             {
                 rng.GetBytes(salt);
             }
 
-            // Hash the password using the salt
+            // hash the password using the salt
             byte[] hash = KeyDerivation.Pbkdf2(
                 password: password,
                 salt: salt,
@@ -61,12 +61,12 @@ namespace DryvetrackTest.Controllers
                 iterationCount: 10000,
                 numBytesRequested: 32);
 
-            // Combine the salt and hash into a single array
+            // combine the salt and hash into a single array
             byte[] hashBytes = new byte[16 + 32]; // 16 bytes for salt, 32 bytes for hash
             Array.Copy(salt, 0, hashBytes, 0, 16); // Copy the salt at the start
             Array.Copy(hash, 0, hashBytes, 16, 32); // Copy the hash after the salt
 
-            // Return the result as a Base64 string
+            // return the result as a Base64 string
             return Convert.ToBase64String(hashBytes);
         }
     }
