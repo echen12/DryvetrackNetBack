@@ -36,7 +36,7 @@ builder.Services.AddCors(options =>
                           .AllowAnyHeader());
 });
 
-// Add services to the container.
+
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<CarService>();
 builder.Services.AddScoped<InsuranceService>();
@@ -55,15 +55,12 @@ builder.Services.AddDbContext<DataContext>(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//    app.UseDeveloperExceptionPage();
-//}
-
-app.UseSwagger();
-app.UseSwaggerUI();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
+}
 
 app.UseHttpsRedirection();
 
